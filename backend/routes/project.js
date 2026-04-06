@@ -7,6 +7,9 @@ const multer = require('multer');
 const storage = require('../config/cloudinary');
 const upload = multer({ storage });
 
+//auth import
+const verifyToken = require('../auth/auth');
+
 //get routing
 router.get('/', async (req, res) => {   
     try {
@@ -20,7 +23,7 @@ router.get('/', async (req, res) => {
 
 
 //post routing
-router.post('/',upload.single('image'), async (req, res) => {
+router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { title, description, stack, githubUrl, liveUrl } = req.body;
     const imageUrl = req.file ? req.file.path : "";

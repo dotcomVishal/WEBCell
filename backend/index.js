@@ -13,6 +13,8 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('mongodb connected'))
     .catch((error) => console.error('error : ', error));
 
+app.use('/api/auth', require('./auth/route'));
+
 app.use('/api/project', require('./routes/project')); 
 
 app.use('/api/team', require('./routes/team'));
