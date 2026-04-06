@@ -15,6 +15,8 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api/project', require('./routes/project')); 
 
+app.use('/api/team', require('./routes/team'));
+
 app.get('/api/status', (req, res) => {
   res.json({ status: 'server on' });
 });
@@ -22,5 +24,3 @@ app.get('/api/status', (req, res) => {
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
-
-
