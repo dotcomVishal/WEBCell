@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Project = require('../model/project');
 
+// multer imports for file handling 
+const multer = require('multer');
+const storage = require('../config/cloudinary');
+const upload = multer({ storage });
+
+//get routing
 router.get('/', async (req, res) => {   
     try {
         const projects = await Project.find().sort({ createdAt: -1 });
@@ -12,15 +18,18 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+
+//post routing
+router.post('/',upload.single('image'), async (req, res) => {
   try {
-    const { title, description, stack, imageUrl, githubUrl, liveUrl } = req.body;
+    const { title, description, stack, githubUrl, liveUrl } = req.body;
+    const imageUrl = req.file ? req.file.path : "";
 
 
     const newProject = new Project({
       title,
       description,
-      stack,
+      stack : stack ? stack.split(',') : [], //cuz its multipart form data
       imageUrl,
       githubUrl,
       liveUrl

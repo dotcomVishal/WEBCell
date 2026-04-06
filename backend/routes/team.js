@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Team = require('../model/team');
 
+//cloudinary imports
+const multer = require('multer');
+const storage = require('../config/cloudinary');
+const upload = multer({ storage });
+
+
 router.get('/', async (req, res) => {   
     try {
         const teams = await Team.find().sort({ createdAt: -1 });
@@ -12,9 +18,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/',upload.single('image'), async (req, res) => {
   try {
-    const { Name, Role, imageUrl } = req.body;
+    const { Name, Role } = req.body;
+    const imageUrl = req.file ? req.file.path : "";
 
 
     const newTeam = new Team({
