@@ -5,18 +5,6 @@ const bcrypt = require('bcrypt');
 const Admin = require('../auth/model');
 
 
-router.post('/setup', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const admin = new Admin({ username, password }); // hook runs on .save()
-    await admin.save();
-    res.json({ message: 'Admin created successfully' });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   
