@@ -39,6 +39,12 @@ function Projects() {
     fetchProjects();
   }, []);
 
+  const toAbsoluteUrl = (raw = "") => {
+  const v = String(raw).trim();
+  if (!v) return "";
+  if (/^https?:\/\//i.test(v)) return v;
+  return `https://${v}`;
+};
 
 
   const cleanText = (value = "") =>
@@ -57,9 +63,9 @@ function Projects() {
         title: cleanText(p?.title || "Untitled Project"),
         description: cleanText(p?.description || "No description provided."),
         stack: Array.isArray(p?.stack) ? p.stack.filter(Boolean) : [],
-        imageUrl: cleanText(p?.imageUrl || ""),
-        githubUrl: cleanText(p?.githubUrl || ""),
-        liveUrl: cleanText(p?.liveUrl || "")
+        imageUrl: toAbsoluteUrl(p?.imageUrl || ""),
+        githubUrl: toAbsoluteUrl(p?.githubUrl || ""),
+        liveUrl: toAbsoluteUrl(p?.liveUrl || "")
       }));
   }, [projects]);
 

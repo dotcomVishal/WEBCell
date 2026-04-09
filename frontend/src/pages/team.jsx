@@ -25,7 +25,12 @@ function Team() {
     fetchTeam();
   }, []);
 
-
+  const toAbsoluteUrl = (raw = "") => {
+  const v = String(raw).trim();
+  if (!v) return "";
+  if (/^https?:\/\//i.test(v)) return v;
+  return `https://${v}`;
+  };
 
   const cleanText = (value = "") =>
     String(value)
@@ -42,8 +47,8 @@ function Team() {
       .map((m, idx) => {
         const cleanName = cleanText(m?.Name || `Member ${idx + 1}`);
         const cleanRole = cleanText(m?.Role || "Team Member");
-        const cleanLinked = String(m?.linked || "").trim();
-        const cleanImage = String(m?.imageUrl || "").trim();
+        const cleanLinked = toAbsoluteUrl(m?.linked || "");
+        const cleanImage = toAbsoluteUrl(m?.imageUrl || "");
 
         return {
           key: m?._id || m?.id || idx,

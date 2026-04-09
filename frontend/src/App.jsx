@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import Team from "./pages/team";
 import Projects from "./pages/projects";
 import Gallery from "./components/gallery";
+import Admin from "./pages/admin";
 function App() {
   return (
     <div className="hi">
@@ -38,6 +39,7 @@ function App() {
         <Route path="/team" element={<Team />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/devadmin" element={<Admin />} />
       </Routes>
     </div>
   );

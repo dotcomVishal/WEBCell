@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import PagePixelBg from "../components/PagePixelBg";
 import "../components/gallery.css";
 
 function Gallery() {
@@ -42,33 +43,43 @@ function Gallery() {
 
   if (loading) {
     return (
-      <section className="gallery-page">
-        <h1 className="gallery-title">Gallery</h1>
-        <p className="gallery-msg">Loading gallery...</p>
+      <section className="gallery-page page-with-bg">
+        <PagePixelBg />
+        <div className="page-content-layer">
+          <h1 className="gallery-title">Gallery</h1>
+          <p className="gallery-msg">Loading gallery...</p>
+        </div>
       </section>
     );
   }
 
   if (error) {
     return (
-      <section className="gallery-page">
-        <h1 className="gallery-title">Gallery</h1>
-        <p className="gallery-msg gallery-err">{error}</p>
+      <section className="gallery-page page-with-bg">
+        <PagePixelBg />
+        <div className="page-content-layer">
+          <h1 className="gallery-title">Gallery</h1>
+          <p className="gallery-msg gallery-err">{error}</p>
+        </div>
       </section>
     );
   }
 
   return (
-    <section className="gallery-page">
-      <h1 className="gallery-title">Gallery</h1>
+    <section className="gallery-page page-with-bg">
+      <PagePixelBg />
 
-      <div className="gallery-masonry">
-        {photos.map((photo) => (
-          <figure className="gallery-item" key={photo.key}>
-            <img src={photo.imageUrl} alt={photo.caption || "Gallery image"} loading="lazy" />
-            {photo.caption && <figcaption>{photo.caption}</figcaption>}
-          </figure>
-        ))}
+      <div className="page-content-layer">
+        <h1 className="gallery-title">Gallery</h1>
+
+        <div className="gallery-masonry">
+          {photos.map((photo) => (
+            <figure className="gallery-item" key={photo.key}>
+              <img src={photo.imageUrl} alt={photo.caption || "Gallery image"} loading="lazy" />
+              {photo.caption && <figcaption>{photo.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   );
