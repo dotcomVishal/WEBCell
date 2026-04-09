@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/home";
 import Team from "./pages/team";
 import Projects from "./pages/projects";
-
+import Gallery from "./components/gallery";
 function App() {
   return (
     <div className="hi">
@@ -37,6 +37,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/team" element={<Team />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/gallery" element={<Gallery />} />
       </Routes>
     </div>
   );

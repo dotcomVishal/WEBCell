@@ -10,6 +10,7 @@ function Navbar() {
       <div className="nav-links">
         <Link to="/team">Team</Link>
         <Link to="/projects">Projects</Link>
+        <Link to="/gallery">Gallery</Link>
       </div>
     </nav>
   );

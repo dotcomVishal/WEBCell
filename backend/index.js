@@ -17,6 +17,8 @@ app.use('/api/auth', require('./auth/route'));
 
 app.use('/api/project', require('./routes/project')); 
 
+app.use('/api/gallery', require('./routes/gallery'));
+
 app.use('/api/team', require('./routes/team'));
 
 
