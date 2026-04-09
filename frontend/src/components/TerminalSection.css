@@ -1,0 +1,144 @@
+.terminal-section {
+  min-height: 100vh;
+  padding: 110px 1.2rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.terminal-shell {
+  width: min(1080px, 100%);
+  border: 1px solid rgba(177, 158, 239, 0.28);
+  border-radius: 10px;
+  background: rgba(8, 8, 10, 0.95);
+  overflow: hidden;
+}
+
+.terminal-topbar {
+  height: 52px;
+  border-bottom: 1px solid rgba(177, 158, 239, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  font-size: 0.7rem;
+  color: #d9ceff;
+  background: rgba(14, 14, 18, 0.95);
+}
+
+.terminal-body {
+  padding: 1rem;
+}
+
+.terminal-log {
+  min-height: 220px;
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid rgba(177, 158, 239, 0.2);
+  border-radius: 8px;
+  padding: 0.9rem;
+  background: rgba(5, 5, 6, 0.9);
+}
+
+.terminal-log p {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  color: #ece6ff;
+  line-height: 1.45;
+}
+
+.terminal-input-row {
+  margin-top: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(177, 158, 239, 0.26);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(10, 10, 12, 0.95);
+}
+
+.prompt {
+  color: #b19eef;
+  font-size: 0.82rem;
+}
+
+.terminal-input-row input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #f5f5f5;
+  font-family: inherit;
+  font-size: 0.76rem;
+}
+
+.snake-wrap {
+  margin-top: 1rem;
+  border: 1px solid rgba(177, 158, 239, 0.2);
+  border-radius: 8px;
+  padding: 0.8rem;
+  background: rgba(9, 9, 10, 0.95);
+}
+
+.snake-headline {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  font-size: 0.72rem;
+  color: #ddd2ff;
+}
+
+.game-over {
+  color: #f0c9ff;
+}
+
+.snake-grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 2px;
+  width: min(440px, 100%);
+  aspect-ratio: 1;
+  background: #09090a;
+  border: 1px solid rgba(177, 158, 239, 0.2);
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.cell {
+  background: rgba(177, 158, 239, 0.08);
+  border-radius: 1px;
+}
+
+.cell.snake {
+  background: rgba(177, 158, 239, 0.5);
+}
+
+.cell.head {
+  background: rgba(215, 199, 255, 0.9);
+}
+
+.cell.food {
+  background: rgba(186, 168, 236, 0.85);
+}
+
+.terminal-shell {
+  width: min(1250px, 100%);   /* was ~1080px */
+}
+
+.terminal-body {
+  padding: 1.25rem;           /* slightly bigger spacing */
+}
+
+.terminal-log {
+  min-height: 280px;          /* was ~220px */
+  max-height: 380px;          /* was ~320px */
+  padding: 1rem;
+}
+
+.snake-grid {
+  width: min(520px, 100%);    /* was ~440px */
+}

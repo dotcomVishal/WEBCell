@@ -25,28 +25,33 @@ router.get('/', async (req, res) => {
 //post routing
 router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   try {
-    const { title, description, stack, githubUrl, liveUrl } = req.body;
-    const imageUrl = req.file ? req.file.path : "";
-
-
-    const newProject = new Project({
-      title,
-      description,
-      stack : stack ? stack.split(',') : [], //cuz its multipart form data
-      imageUrl,
-      githubUrl,
-      liveUrl
-    });
-
-
-    const project = await newProject.save();
+    const { title, description, stack, githubUrl, liveUrl, id } = req.body;
     
 
-    res.json(project); 
+    const updatedProject = await Project.findOneAndUpdate(
+      { id: id },   // find exising by id
+      {
+        title,
+        description,
+        stack : stack ? stack.split(',') : [],
+        githubUrl,
+        liveUrl,
+        id,
+        ...(req.file && { imageUrl: req.file.path })
+      },
+      {
+        new: true,
+        upsert: true   // create neww if not found
+      }
+    );
+
+    res.json(updatedProject);
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
+
 
 module.exports = router;

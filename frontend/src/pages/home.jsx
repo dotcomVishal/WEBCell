@@ -1,10 +1,12 @@
 import HoverLetters from "../components/hover";
 import PixelBlast from "../components/PixelBlast";
+import TerminalSection from "../components/TerminalSection";
 
 function Home() {
   return (
-    <section className="hero">
-      <div className="pixel-bg">
+    <>
+      
+      <div className="pixel-bg-fixed">
         <PixelBlast
           variant="square"
           pixelSize={5}
@@ -26,13 +28,18 @@ function Home() {
         />
       </div>
 
-      <div className="hero-mask"></div>
+      
+      <section className="hero">
+        <div className="hero-mask"></div>
 
-      <div className="hero-content">
-        <HoverLetters text="DEV.cell" />
-        <p>Developers of IIT Mandi</p>
-      </div>
-    </section>
+        <div className="hero-content">
+          <HoverLetters text="DEV.cell" />
+          <p>Developers at IIT Mandi</p>
+        </div>
+      </section>
+
+      <TerminalSection />
+    </>
   );
 }
 

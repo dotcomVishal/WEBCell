@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const teamschema = new mongoose.Schema({
-      id: {
+      "id": {
     type: Number,
     required: true,
     min: 1,

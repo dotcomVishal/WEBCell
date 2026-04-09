@@ -2,6 +2,13 @@ const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
 
+    "id": {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 6
+    },
+
     title : { type: String,
               required: true },
 

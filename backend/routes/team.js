@@ -23,22 +23,24 @@ router.get('/', async (req, res) => {
 router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { Name, Role, id, linked } = req.body;
-    const imageUrl = req.file ? req.file.path : "";
 
+    const updatedTeam = await Team.findOneAndUpdate(
+      { id: id },   // find exising by id
+      {
+        Name,
+        Role,
+        id,
+        linked,
+        ...(req.file && { imageUrl: req.file.path })
+      },
+      {
+        new: true,
+        upsert: true   // create neww if not found
+      }
+    );
 
-    const newTeam = new Team({
-      Name,
-      Role,
-      id,
-      linked,
-      imageUrl
-    });
+    res.json(updatedTeam);
 
-
-    const team = await newTeam.save();
-    
-
-    res.json(team); 
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

@@ -19,7 +19,7 @@ app.use('/api/project', require('./routes/project'));
 
 app.use('/api/team', require('./routes/team'));
 
-app.use('/api/activework', require('./routes/activework'));
+
 
 app.get('/api/status', (req, res) => {
   res.json({ status: 'server on' });

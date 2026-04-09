@@ -15,6 +15,16 @@ const clamp = (v, min = 0, max = 100) => Math.min(Math.max(v, min), max);
 const round = (v, precision = 3) => parseFloat(v.toFixed(precision));
 const adjust = (v, fMin, fMax, tMin, tMax) => round(tMin + ((tMax - tMin) * (v - fMin)) / (fMax - fMin));
 
+const cleanName = (value = '') =>
+  String(value).replace(/[;,.]+$/g, '').trim();
+
+const getNameClass = (name = '') => {
+  const len = cleanName(name).length;
+  if (len >= 16) return 'name-xsmall';
+  if (len >= 12) return 'name-small';
+  return 'name-normal';
+};
+
 const ProfileCardComponent = ({
   avatarUrl = '<Placeholder for avatar URL>',
   iconUrl = '<Placeholder for icon URL>',
@@ -235,14 +245,9 @@ const ProfileCardComponent = ({
     const shell = shellRef.current;
     if (!shell) return;
 
-    const pointerMoveHandler = handlePointerMove;
-    const pointerEnterHandler = handlePointerEnter;
-    const pointerLeaveHandler = handlePointerLeave;
-    const deviceOrientationHandler = handleDeviceOrientation;
-
-    shell.addEventListener('pointerenter', pointerEnterHandler);
-    shell.addEventListener('pointermove', pointerMoveHandler);
-    shell.addEventListener('pointerleave', pointerLeaveHandler);
+    shell.addEventListener('pointerenter', handlePointerEnter);
+    shell.addEventListener('pointermove', handlePointerMove);
+    shell.addEventListener('pointerleave', handlePointerLeave);
 
     const handleClick = () => {
       if (!enableMobileTilt || location.protocol !== 'https:') return;
@@ -252,12 +257,12 @@ const ProfileCardComponent = ({
           .requestPermission()
           .then(state => {
             if (state === 'granted') {
-              window.addEventListener('deviceorientation', deviceOrientationHandler);
+              window.addEventListener('deviceorientation', handleDeviceOrientation);
             }
           })
           .catch(console.error);
       } else {
-        window.addEventListener('deviceorientation', deviceOrientationHandler);
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
       }
     };
     shell.addEventListener('click', handleClick);
@@ -269,11 +274,11 @@ const ProfileCardComponent = ({
     tiltEngine.beginInitial(ANIMATION_CONFIG.INITIAL_DURATION);
 
     return () => {
-      shell.removeEventListener('pointerenter', pointerEnterHandler);
-      shell.removeEventListener('pointermove', pointerMoveHandler);
-      shell.removeEventListener('pointerleave', pointerLeaveHandler);
+      shell.removeEventListener('pointerenter', handlePointerEnter);
+      shell.removeEventListener('pointermove', handlePointerMove);
+      shell.removeEventListener('pointerleave', handlePointerLeave);
       shell.removeEventListener('click', handleClick);
-      window.removeEventListener('deviceorientation', deviceOrientationHandler);
+      window.removeEventListener('deviceorientation', handleDeviceOrientation);
       if (enterTimerRef.current) window.clearTimeout(enterTimerRef.current);
       if (leaveRafRef.current) cancelAnimationFrame(leaveRafRef.current);
       tiltEngine.cancel();
@@ -304,6 +309,9 @@ const ProfileCardComponent = ({
     onContactClick?.();
   }, [onContactClick]);
 
+  const safeName = cleanName(name);
+  const nameClass = getNameClass(safeName);
+
   return (
     <div ref={wrapRef} className={`pc-card-wrapper ${className}`.trim()} style={cardStyle}>
       {behindGlowEnabled && <div className="pc-behind" />}
@@ -316,7 +324,7 @@ const ProfileCardComponent = ({
               <img
                 className="avatar"
                 src={avatarUrl}
-                alt={`${name || 'User'} avatar`}
+                alt={`${safeName || 'User'} avatar`}
                 loading="lazy"
                 onError={e => {
                   const t = e.target;
@@ -329,7 +337,7 @@ const ProfileCardComponent = ({
                     <div className="pc-mini-avatar">
                       <img
                         src={miniAvatarUrl || avatarUrl}
-                        alt={`${name || 'User'} mini avatar`}
+                        alt={`${safeName || 'User'} mini avatar`}
                         loading="lazy"
                         onError={e => {
                           const t = e.target;
@@ -348,7 +356,7 @@ const ProfileCardComponent = ({
                     onClick={handleContactClick}
                     style={{ pointerEvents: 'auto' }}
                     type="button"
-                    aria-label={`Contact ${name || 'user'}`}
+                    aria-label={`Contact ${safeName || 'user'}`}
                   >
                     {contactText}
                   </button>
@@ -357,7 +365,7 @@ const ProfileCardComponent = ({
             </div>
             <div className="pc-content">
               <div className="pc-details">
-                <h3>{name}</h3>
+                <h3 className={nameClass}>{safeName}</h3>
                 <p>{title}</p>
               </div>
             </div>
