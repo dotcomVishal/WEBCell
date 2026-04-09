@@ -22,13 +22,15 @@ router.get('/', async (req, res) => {
 
 router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   try {
-    const { Name, Role } = req.body;
+    const { Name, Role, id, linked } = req.body;
     const imageUrl = req.file ? req.file.path : "";
 
 
     const newTeam = new Team({
       Name,
       Role,
+      id,
+      linked,
       imageUrl
     });
 
