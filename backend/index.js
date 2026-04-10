@@ -1,13 +1,26 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit'); //to stop people from spamming  
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 100, 
+  message: { error: 'Too many requests from this IP, please try again after 15 minutes' },
+  standardHeaders: true, 
+  legacyHeaders: false, 
+});
+
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+app.use(globalLimiter);
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('mongodb connected'))
