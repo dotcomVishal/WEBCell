@@ -19,7 +19,7 @@ function Projects() {
         setLoading(true);
         setError("");
 
-        const res = await fetch("http://localhost:5000/api/project");
+        const res = await fetch("/api/project");
 
         if (!res.ok) {
           throw new Error(`Failed to fetch projects: ${res.status}`);

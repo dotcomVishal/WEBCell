@@ -6,13 +6,11 @@ services:
     build: ./backend
     ports:
       - "5000:5000"
-    environment:
-      - PORT=5000
-      - MONGO_URI=${MONGO_URI}
-      - JWT_SECRET=${JWT_SECRET}
-      - CLOUD_NAME=${CLOUD_NAME}
-      - API_KEY=${API_KEY}
-      - API_SECRET=${API_SECRET}
+    env_file:
+      - .env  
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     restart: always
 
   frontend:

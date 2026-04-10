@@ -13,7 +13,7 @@ function Gallery() {
         setLoading(true);
         setError("");
 
-        const res = await fetch("http://localhost:5000/api/gallery");
+        const res = await fetch("/api/gallery");
         if (!res.ok) throw new Error(`Failed to fetch gallery: ${res.status}`);
 
         const data = await res.json();
